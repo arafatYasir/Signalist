@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button"
 
 const HomePage = () => {
   return (
-    <div>
-      <Button>Click Me</Button>
+    <div className="flex min-h-screen home-wrapper">
+      Home
     </div>
   )
 }
