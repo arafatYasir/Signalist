@@ -204,15 +204,15 @@
   }
 
   .form-input {
-    @apply h-12 px-3 py-3 text-white text-base placeholder:text-gray-500 border-gray-600 bg-gray-800 rounded-lg focus: !border-yellow-500 focus:ring-0;
+    @apply h-12 px-3 py-3 text-white text-base placeholder:text-gray-500 border-gray-600 bg-gray-800 rounded-lg focus:!border-yellow-500 focus:ring-0;
   }
 
   .select-trigger {
-    @apply w-full !h-12 px-3 py-3 text-base border-gray-600 bg-gray-800 text-white rounded-lg focus: !border-yellow-500 focus:ring-0;
+    @apply w-full !h-12 px-3 py-3 text-base border-gray-600 bg-gray-800 text-white rounded-lg focus:!border-yellow-500 focus:ring-0;
   }
 
   .country-select-trigger {
-    @apply h-12 px-3 py-3 text-base w-full justify-between font-normal border-gray-600 bg-gray-800 text-gray-400 rounded-lg focus: !border-yellow-500 focus:ring-0;
+    @apply h-12 px-3 py-3 text-base w-full justify-between font-normal border-gray-600 bg-gray-800 text-gray-400 rounded-lg focus:!border-yellow-500 focus:ring-0;
   }
 
   .country-select-input {
@@ -224,7 +224,7 @@
   }
 
   .country-select-item {
-    @apply text-white cursor-pointer px-3 py-2 rounded-sm bg-gray-800 hover: !bg-gray-600;
+    @apply text-white cursor-pointer px-3 py-2 rounded-sm bg-gray-800 hover:!bg-gray-600;
   }
 
   .footer-link {
@@ -252,7 +252,7 @@
   }
 
   .search-list-indicator {
-    @apply px-5 py-2
+    @apply px-5 py-2;
   }
 
   .search-list-empty {
@@ -262,6 +262,7 @@
   .search-input {
     @apply !bg-gray-800 border-0 text-gray-400 placeholder:text-gray-500 focus:ring-0 text-base h-14 pr-10;
   }
+
 
   .search-loader {
     @apply absolute right-12 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 animate-spin;
@@ -296,7 +297,7 @@
   }
 
   .watchlist-remove {
-    @apply bg-red-500 ! hover:bg-red-500 ! text-gray-900 !
+    @apply bg-red-500 hover:!bg-red-500 !text-gray-900;
   }
 
   .watchlist-empty-container {
@@ -332,11 +333,11 @@
   }
 
   .watchlist-icon-btn {
-    @apply w-fit cursor-pointer hover:bg-transparent ! text-gray-400 hover:text-yellow-500;
+    @apply w-fit cursor-pointer hover:bg-transparent !text-gray-400 hover:text-yellow-500;
   }
 
   .watchlist-icon-added {
-    @apply !text-yellow-500 hover: !text-yellow-600;
+    @apply !text-yellow-500 hover:!text-yellow-600;
   }
 
   .watchlist-icon {
@@ -481,7 +482,6 @@
 .tradingview-widget-container__widget {
   background-color: #141414 !important;
   height: 100% !important;
-
 }
 
 .widget-stock-heatmap-container .screenerMapWrapper-BBVfGP0b {
