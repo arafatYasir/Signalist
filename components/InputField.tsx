@@ -1,12 +1,13 @@
 import { cn } from "@/lib/utils"
 import { Input } from "./ui/input"
+import { Label } from "./ui/label"
 
 const InputField = ({ name, label, placeholder, register, error, validation, type = "text", disabled, value } : FormInputProps) => {
     return (
         <div className="space-y-2">
-            <label htmlFor={name} className="form-label">
+            <Label htmlFor={name} className="form-label">
                 {label}
-            </label>
+            </Label>
 
             <Input
                 type={type}
