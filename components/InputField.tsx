@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 
-const InputField = ({ name, label, placeholder, register, error, validation, type = "text", disabled, value } : FormInputProps) => {
+const InputField = ({ name, label, placeholder, register, error, validation, type = "text", disabled, value, className } : FormInputProps) => {
     return (
         <div className="space-y-2">
             <Label htmlFor={name} className="form-label">
@@ -15,7 +15,7 @@ const InputField = ({ name, label, placeholder, register, error, validation, typ
                 disabled={disabled}
                 value={value}
                 placeholder={placeholder}
-                className={cn("form-input", {
+                className={cn(`form-input ${className}`, {
                     "opacity-50 cursor-not-allowed": disabled
                 })}
                 {...register(name, validation)}
