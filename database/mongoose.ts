@@ -19,22 +19,28 @@ export const dbConnect = async () => {
     if (!MONGODB_URI) {
         throw new Error("Please provide a MONGODB_URI in the environment variables");
     }
+
     try {
         if (cached.conn) {
             return cached.conn;
         }
         if (!cached.promise) {
-            cached.promise = mongoose.connect(MONGODB_URI, { bufferCommands: false }).then((mongoose) => {
+            // Updated connection options
+            cached.promise = mongoose.connect(MONGODB_URI, {
+                bufferCommands: false,
+                serverSelectionTimeoutMS: 5000,
+                socketTimeoutMS: 45000,
+                tls: true,
+                autoIndex: true,
+            }).then((mongoose) => {
                 return mongoose;
-            })
+            });
         }
-
         cached.conn = await cached.promise;
-
-        console.log(`--------- Database Connected on ${process.env.NODE_ENV} ----------`);
+        console.log(`--------- Database Connected ----------`);
         return cached.conn;
     } catch (e) {
-        console.error(e);
+        console.error("MongoDB Connection Error Details:", e);
         throw e;
     }
 }

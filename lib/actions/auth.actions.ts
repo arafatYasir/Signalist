@@ -30,5 +30,6 @@ export const signUpWithEmail = async (data: SignUpFormData) => {
         return { success: true, data: response };
     } catch (e) {
         console.error(e);
+        return { success: false, error: "Failed to sign up" };
     }
 }

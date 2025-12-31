@@ -5,10 +5,15 @@ import FooterLinks from "@/components/FooterLinks";
 import InputField from "@/components/InputField";
 import SelectField from "@/components/SelectField";
 import { Button } from "@/components/ui/button";
+import { signUpWithEmail } from "@/lib/actions/auth.actions";
 import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from "@/lib/constants";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const SignUp = () => {
+    const router = useRouter();
+
     const {
         register,
         handleSubmit,
@@ -29,9 +34,14 @@ const SignUp = () => {
 
     const onSubmit = async (data: SignUpFormData) => {
         try {
-            
+            const result = await signUpWithEmail(data);
+
+            if (result.success) {
+                router.push("/");
+            }
         } catch (e) {
-            console.error(e)
+            console.error(e);
+            toast.error("Sign up failed.", { description: e instanceof Error ? e.message : "Something went wrong" });
         }
     }
 
@@ -47,7 +57,7 @@ const SignUp = () => {
                     placeholder="John Doe"
                     register={register}
                     error={errors.fullName}
-                    validation={{required: "Full name is required", minLength: {value: 4, message: "Full name must be at least 4 characters long"}}}
+                    validation={{ required: "Full name is required", minLength: { value: 4, message: "Full name must be at least 4 characters long" } }}
                 />
                 <InputField
                     name="email"
@@ -56,7 +66,7 @@ const SignUp = () => {
                     placeholder="email@example.com"
                     register={register}
                     error={errors.email}
-                    validation={{required: "Email is required", pattern: {value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Invalid email address"}}}
+                    validation={{ required: "Email is required", pattern: { value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, message: "Invalid email address" } }}
                 />
                 <InputField
                     name="password"
@@ -65,7 +75,7 @@ const SignUp = () => {
                     placeholder="· · · · · · · · · ·"
                     register={register}
                     error={errors.password}
-                    validation={{required: "Password is required", minLength: {value: 8, message: "Password must be at least 8 characters long"}}}
+                    validation={{ required: "Password is required", minLength: { value: 8, message: "Password must be at least 8 characters long" } }}
                     className="placeholder:text-lg"
                 />
 
