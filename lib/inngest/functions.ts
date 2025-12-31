@@ -1,3 +1,4 @@
+import { sendWelcomeEmail } from "../nodemailer";
 import { inngest } from "./client";
 import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "./prompts";
 
@@ -31,6 +32,11 @@ export const sendSignUpEmail = inngest.createFunction(
         await step.run("send-welcome-email", async () => {
             const part = response.candidates?.[0].content?.parts?.[0];
             const introText = (part && "text" in part ? part.text : null) || "Thanks for joining signlist. You now have access to our real-time alerts for stocks and companies you're interested in."
+
+            const { data: {email, name} } = event;
+            return await sendWelcomeEmail({
+                email, name, intro: introText
+            });
         });
 
         return {
