@@ -3,22 +3,22 @@ import Link from "next/link"
 import NavItems from "./NavItems"
 import UserDropdown from "./UserDropdown"
 
-const Header = () => {
+const Header = ({ user }: { user: User }) => {
   return (
     <header className="sticky top-0 header">
-        <div className="container header-wrapper">
-            <Link href="/">
-                <Image src="/assets/icons/logo.svg" alt="logo" width={140} height={32} className="h-8 w-auto cursor-pointer" />
-            </Link>
+      <div className="container header-wrapper">
+        <Link href="/">
+          <Image src="/assets/icons/logo.svg" alt="logo" width={140} height={32} className="h-8 w-auto cursor-pointer" />
+        </Link>
 
-            <nav className="hidden sm:block">
-                {/* ---- Nav Items ---- */}
-                <NavItems />
-            </nav>
+        <nav className="hidden sm:block">
+          {/* ---- Nav Items ---- */}
+          <NavItems />
+        </nav>
 
-            {/* ---- User Dropdown ---- */}
-            <UserDropdown />
-        </div>
+        {/* ---- User Dropdown ---- */}
+        <UserDropdown user={user} />
+      </div>
     </header>
   )
 }
