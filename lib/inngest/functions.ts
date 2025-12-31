@@ -33,7 +33,7 @@ export const sendSignUpEmail = inngest.createFunction(
             const part = response.candidates?.[0].content?.parts?.[0];
             const introText = (part && "text" in part ? part.text : null) || "Thanks for joining signlist. You now have access to our real-time alerts for stocks and companies you're interested in."
 
-            const { data: {email, name} } = event;
+            const { data: { email, name } } = event;
             return await sendWelcomeEmail({
                 email, name, intro: introText
             });
@@ -43,5 +43,20 @@ export const sendSignUpEmail = inngest.createFunction(
             success: true,
             message: "Welcome email sent successfully!"
         }
+    }
+);
+
+export const sendDailyNewsSummary = inngest.createFunction(
+    { id: "daily-news-summary" },
+    [
+        { event: "app/send.daily.news" },
+        { cron: "0 12 * * *" }
+    ],
+    async ({ step }) => {
+        // Get all the users for news delivery
+        
+        // Fetch personalized news for each user
+        // Summarize these news via AI for each user
+        // Send the emails summary
     }
 )
