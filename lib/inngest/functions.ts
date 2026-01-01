@@ -1,3 +1,4 @@
+import { getAllUsersForNewsEmail } from "../actions/user.actions";
 import { sendWelcomeEmail } from "../nodemailer";
 import { inngest } from "./client";
 import { PERSONALIZED_WELCOME_EMAIL_PROMPT } from "./prompts";
@@ -54,8 +55,17 @@ export const sendDailyNewsSummary = inngest.createFunction(
     ],
     async ({ step }) => {
         // Get all the users for news delivery
+        const users = await step.run("get-all-users", getAllUsersForNewsEmail);
+
+        if(!users || users.length === 0) {
+            return {
+                success: false,
+                message: "No users found for news delivery"
+            };
+        }
         
         // Fetch personalized news for each user
+        
         // Summarize these news via AI for each user
         // Send the emails summary
     }
