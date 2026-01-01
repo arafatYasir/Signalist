@@ -16,7 +16,6 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
     const [stocks, setStocks] = useState<StockWithWatchlistStatus[]>(initialStocks);
 
     const isSearchMode = !!searchTerm.trim();
-    const displayStocks = isSearchMode ? stocks : stocks?.slice(0, 10);
 
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
@@ -80,7 +79,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                             <Spinner />
                             <span>Loading stocks...</span>
                         </CommandEmpty>
-                    ) : displayStocks?.length === 0 ? (
+                    ) : stocks?.length === 0 ? (
                         <div className="search-list-indicator">
                             {isSearchMode ? 'No results found' : 'No stocks available'}
                         </div>
@@ -88,10 +87,10 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                         <ul>
                             <div className="search-count">
                                 {isSearchMode ? 'Search results' : 'Popular stocks'}
-                                {` `}({displayStocks?.length || 0})
+                                {` `}({stocks?.length || 0})
                             </div>
 
-                            {displayStocks?.map((stock, i) => (
+                            {stocks?.map((stock, i) => (
                                 <li key={stock.symbol} className="search-item">
                                     <Link
                                         href={`/stocks/${stock.symbol}`}

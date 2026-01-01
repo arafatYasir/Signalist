@@ -273,11 +273,11 @@
   }
 
   .search-item {
-    @apply rounded-none my-3 px-1 w-full data-[selected=true]:bg-gray-600;
+    @apply rounded-none w-full data-[selected=true]:bg-gray-600;
   }
 
   .search-item-link {
-    @apply px-2 w-full cursor-pointer border-b border-gray-600 last:border-b-0 transition-colors flex items-center gap-3;
+    @apply p-2 w-full cursor-pointer border-b border-gray-600 last:border-b-0 transition-colors flex items-center gap-3 hover:bg-gray-600;
   }
 
   .search-item-name {

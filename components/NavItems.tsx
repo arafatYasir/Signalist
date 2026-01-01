@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import SearchCommand from "./SearchCommand";
 
-const NavItems = () => {
+const NavItems = ({ initialStocks }: { initialStocks: StockWithWatchlistStatus[] }) => {
     const pathname = usePathname();
 
     const isActive = (path: string) => {
@@ -20,9 +20,9 @@ const NavItems = () => {
         <ul className="flex flex-col sm:flex-row p-2 gap-3 sm:gap-10 font-medium">
             {
                 NAV_ITEMS.map((item, index) => {
-                    if(item.label === "Search") {
+                    if (item.label === "Search") {
                         return (
-                            <SearchCommand key="search-command" label="Search" renderAs="text" initialStocks={[]} />
+                            <SearchCommand key="search-command" label="Search" renderAs="text" initialStocks={initialStocks} />
                         )
                     }
 
