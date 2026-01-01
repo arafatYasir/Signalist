@@ -21,7 +21,7 @@ const Header = async ({ user }: { user: User }) => {
         </nav>
 
         {/* ---- User Dropdown ---- */}
-        <UserDropdown user={user} />
+        <UserDropdown user={user} initialStocks={initialStocks} />
       </div>
     </header>
   )
