@@ -32,7 +32,7 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
             .map((s) => s?.trim().toUpperCase())
             .filter((s): s is string => Boolean(s));
 
-        const maxArticles = 6;
+        const maxArticles = 3;
 
         // If we have symbols, try to fetch company news per symbol and round-robin select
         if (cleanSymbols.length > 0) {
@@ -54,7 +54,7 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
 
             const collected: MarketNewsArticle[] = [];
 
-            // Round-robin up to 6 picks
+            // Round-robin up to 3 picks
             for (let round = 0; round < maxArticles; round++) {
                 for (let i = 0; i < cleanSymbols.length; i++) {
                     const sym = cleanSymbols[i];
