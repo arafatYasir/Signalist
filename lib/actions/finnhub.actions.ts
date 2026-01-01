@@ -128,6 +128,7 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
                 top.map(async (sym) => {
                     try {
                         const url = `${FINNHUB_BASE_URL}/stock/profile2?symbol=${encodeURIComponent(sym)}&token=${token}`;
+
                         // Revalidate every hour
                         const profile = await fetchJSON<any>(url, 3600);
                         return { sym, profile } as { sym: string; profile: any };
@@ -143,7 +144,9 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
                     const symbol = sym.toUpperCase();
                     const name: string | undefined = profile?.name || profile?.ticker || undefined;
                     const exchange: string | undefined = profile?.exchange || undefined;
+                    
                     if (!name) return undefined;
+
                     const r: FinnhubSearchResult = {
                         symbol,
                         description: name,
