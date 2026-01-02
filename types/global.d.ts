@@ -60,6 +60,7 @@ declare global {
         renderAs?: 'button' | 'text';
         label?: string;
         initialStocks: StockWithWatchlistStatus[];
+        userId: string;
     };
 
     type WelcomeEmailData = {

@@ -17,7 +17,7 @@ const Header = async ({ user }: { user: User }) => {
 
         <nav className="hidden sm:block">
           {/* ---- Nav Items ---- */}
-          <NavItems initialStocks={initialStocks} />
+          <NavItems initialStocks={initialStocks} userId={user.id} />
         </nav>
 
         {/* ---- User Dropdown ---- */}

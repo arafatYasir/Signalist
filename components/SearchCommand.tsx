@@ -9,7 +9,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { Spinner } from "@/components/ui/spinner"
 import SearchItem from "./SearchItem";
 
-export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks }: SearchCommandProps) {
+export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks, userId }: SearchCommandProps) {
     const [open, setOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(false)
@@ -69,7 +69,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
 
             <CommandDialog open={open} onOpenChange={setOpen} className="search-dialog">
                 <div className="search-field">
-                    <CommandInput value={searchTerm} onValueChange={setSearchTerm} placeholder="Search stocks..." className="search-input" />
+                    <CommandInput value={searchTerm} onValueChange={setSearchTerm} placeholder="Search by symbol or company name" className="search-input" />
                     {loading && <Loader2 className="search-loader" />}
                 </div>
 
@@ -90,8 +90,8 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                                 {` `}({stocks?.length || 0})
                             </div>
 
-                            {stocks?.map((stock, i) => (
-                                <SearchItem stock={stock} handleSelectStock={handleSelectStock} />
+                            {stocks?.map((stock) => (
+                                <SearchItem key={stock.name} stock={stock} handleSelectStock={handleSelectStock} userId={userId} />
                             ))}
                         </ul>
                     )
