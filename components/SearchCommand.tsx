@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react"
 import { CommandDialog, CommandEmpty, CommandInput, CommandList } from "@/components/ui/command"
 import { Button } from "@/components/ui/button";
-import { Loader2, TrendingUp } from "lucide-react";
-import Link from "next/link";
+import { Loader2 } from "lucide-react";
 import { searchStocks } from "@/lib/actions/finnhub.actions";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Spinner } from "@/components/ui/spinner"
+import SearchItem from "./SearchItem";
 
 export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks }: SearchCommandProps) {
     const [open, setOpen] = useState(false)
@@ -91,25 +91,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                             </div>
 
                             {stocks?.map((stock, i) => (
-                                <li key={stock.symbol} className="search-item">
-                                    <Link
-                                        href={`/stocks/${stock.symbol}`}
-                                        onClick={handleSelectStock}
-                                        className="search-item-link"
-                                    >
-                                        <TrendingUp className="h-4 w-4 text-gray-500" />
-
-                                        <div className="flex-1">
-                                            <div className="search-item-name">
-                                                {stock.name}
-                                            </div>
-                                            <div className="text-sm text-gray-500">
-                                                {stock.symbol} | {stock.exchange} | {stock.type}
-                                            </div>
-                                        </div>
-                                        {/*<Star />*/}
-                                    </Link>
-                                </li>
+                                <SearchItem stock={stock} handleSelectStock={handleSelectStock} />
                             ))}
                         </ul>
                     )
