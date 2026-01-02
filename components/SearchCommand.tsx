@@ -9,7 +9,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { Spinner } from "@/components/ui/spinner"
 import SearchItem from "./SearchItem";
 
-export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks, userId }: SearchCommandProps) {
+export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks, userId, watchlistItems }: SearchCommandProps) {
     const [open, setOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(false)
@@ -91,7 +91,7 @@ export default function SearchCommand({ renderAs = 'button', label = 'Add stock'
                             </div>
 
                             {stocks?.map((stock) => (
-                                <SearchItem key={stock.name} stock={stock} handleSelectStock={handleSelectStock} userId={userId} />
+                                <SearchItem key={stock.name} stock={stock} handleSelectStock={handleSelectStock} userId={userId} watchlistItems={watchlistItems} />
                             ))}
                         </ul>
                     )

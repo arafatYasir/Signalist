@@ -3,6 +3,8 @@
 import { getDateRange, validateArticle, formatArticle } from '@/lib/utils';
 import { POPULAR_STOCK_SYMBOLS } from '@/lib/constants';
 import { cache } from 'react';
+import { Watchlist } from "../../database/models/watchlist.model"
+import { dbConnect } from '@/database/mongoose';
 
 const FINNHUB_BASE_URL = 'https://finnhub.io/api/v1';
 const NEXT_PUBLIC_FINNHUB_API_KEY = process.env.NEXT_PUBLIC_FINNHUB_API_KEY ?? '';
@@ -144,7 +146,7 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
                     const symbol = sym.toUpperCase();
                     const name: string | undefined = profile?.name || profile?.ticker || undefined;
                     const exchange: string | undefined = profile?.exchange || undefined;
-                    
+
                     if (!name) return undefined;
 
                     const r: FinnhubSearchResult = {
@@ -191,3 +193,21 @@ export const searchStocks = cache(async (query?: string): Promise<StockWithWatch
         return [];
     }
 });
+
+export const getWatchlistItems = async (userId: string): Promise<WatchListItem[] | []> => {
+    try {
+        if (!userId || userId.trim() === "") {
+            console.error("No user found!");
+            return [];
+        }
+
+        await dbConnect();
+
+        const watchlistItems = await Watchlist.find({ userId }).lean();
+
+        return watchlistItems;
+    } catch (e) {
+        console.error("Error fetching watchlist items:", e);
+        return [];
+    }
+}

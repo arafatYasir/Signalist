@@ -2,11 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 import NavItems from "./NavItems"
 import UserDropdown from "./UserDropdown"
-import { searchStocks } from "@/lib/actions/finnhub.actions"
+import { getWatchlistItems, searchStocks } from "@/lib/actions/finnhub.actions"
 
 const Header = async ({ user }: { user: User }) => {
   // Fetching inital stocks to show on search command component
   const initialStocks = await searchStocks();
+
+  // Fetching watchlist items
+  const watchlistItems = await getWatchlistItems(user.id);
 
   return (
     <header className="sticky top-0 header">
@@ -17,11 +20,11 @@ const Header = async ({ user }: { user: User }) => {
 
         <nav className="hidden sm:block">
           {/* ---- Nav Items ---- */}
-          <NavItems initialStocks={initialStocks} userId={user.id} />
+          <NavItems initialStocks={initialStocks} userId={user.id} watchlistItems={watchlistItems} />
         </nav>
 
         {/* ---- User Dropdown ---- */}
-        <UserDropdown user={user} initialStocks={initialStocks} />
+        <UserDropdown user={user} initialStocks={initialStocks} watchlistItems={watchlistItems} />
       </div>
     </header>
   )

@@ -61,6 +61,7 @@ declare global {
         label?: string;
         initialStocks: StockWithWatchlistStatus[];
         userId: string;
+        watchlistItems: WatchListItem[] | [];
     };
 
     type WelcomeEmailData = {
@@ -85,6 +86,13 @@ declare global {
     type StockWithWatchlistStatus = Stock & {
         isInWatchlist: boolean;
     };
+
+    type WatchListItem = {
+        userId: string;
+        symbol: string;
+        company: string;
+        addedAt: Date;
+    }
 
     type FinnhubSearchResult = {
         symbol: string;

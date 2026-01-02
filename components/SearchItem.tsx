@@ -3,17 +3,26 @@
 import { cn } from "@/lib/utils";
 import { Star, TrendingUp } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatchlistStatus; handleSelectStock: () => void; userId: string }) => {
+const SearchItem = ({ stock, handleSelectStock, userId, watchlistItems }: { stock: StockWithWatchlistStatus; handleSelectStock: () => void; userId: string; watchlistItems: WatchListItem[] | [] }) => {
     // States
-    const [addedToWatchlist, setAddedToWatchlist] = useState(false); 
+    const [addedToWatchlist, setAddedToWatchlist] = useState(false);
+
+    useEffect(() => {
+        if (watchlistItems.length > 0) {
+            const isAdded = watchlistItems.find(item => (item.symbol === stock.symbol) && (item.company === stock.name));
+
+            if (isAdded) setAddedToWatchlist(true);
+            else setAddedToWatchlist(false);
+        }
+    }, [watchlistItems]);
 
     // Functions
     const handleToggleWatchlist = async () => {
-        try {            
-            if(addedToWatchlist === false) {
+        try {
+            if (addedToWatchlist === false) {
                 // Add to watchlist
                 await handleAddToWatchlist();
             }
@@ -43,7 +52,7 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
             });
             const data = await res.json();
 
-            if(res.ok) {
+            if (res.ok) {
                 toast.success(data.message);
             }
             else {
@@ -74,7 +83,7 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
             });
             const data = await res.json();
 
-            if(res.ok) {
+            if (res.ok) {
                 toast.success(data.message);
             }
             else {

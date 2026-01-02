@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import SearchCommand from "./SearchCommand";
 
-const NavItems = ({ initialStocks, userId }: { initialStocks: StockWithWatchlistStatus[]; userId: string }) => {
+const NavItems = ({ initialStocks, userId, watchlistItems }: { initialStocks: StockWithWatchlistStatus[]; userId: string; watchlistItems: WatchListItem[] | [] }) => {
     const pathname = usePathname();
 
     const isActive = (path: string) => {
@@ -22,7 +22,7 @@ const NavItems = ({ initialStocks, userId }: { initialStocks: StockWithWatchlist
                 NAV_ITEMS.map((item, index) => {
                     if (item.label === "Search") {
                         return (
-                            <SearchCommand key="search-command" label="Search" renderAs="text" initialStocks={initialStocks} userId={userId} />
+                            <SearchCommand key="search-command" label="Search" renderAs="text" initialStocks={initialStocks} userId={userId} watchlistItems={watchlistItems} />
                         )
                     }
 
