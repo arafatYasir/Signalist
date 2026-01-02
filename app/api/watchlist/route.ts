@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
         const itemExists = await Watchlist.findOne({ userId, symbol, company });
 
         if(itemExists) {
-            return NextResponse.json({ error: "Stock already exists in watchlist" }, { status: 403 });
+            return NextResponse.json({ error: "Stock already exists in watchlist" }, { status: 400 });
         }
 
         // Create a new watchlist item with the stock

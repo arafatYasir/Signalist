@@ -30,7 +30,7 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
         try {
             setAddedToWatchlist(true);
 
-            const res: any = await fetch("/api/watchlist", {
+            const res: Response = await fetch("/api/watchlist", {
                 method: "POST",
                 headers: {
                     "Content-type": "application/json"
@@ -41,9 +41,14 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
                     company: stock.name,
                 })
             });
+            const data = await res.json();
 
             if(res.ok) {
-                toast.success("Stock added to watchlist");
+                toast.success(data.message);
+            }
+            else {
+                toast.error(data.error);
+                setAddedToWatchlist(false);
             }
         } catch (e) {
             console.error(e);
@@ -56,7 +61,7 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
         try {
             setAddedToWatchlist(false);
 
-            const res: any = await fetch("/api/watchlist", {
+            const res: Response = await fetch("/api/watchlist", {
                 method: "DELETE",
                 headers: {
                     "Content-type": "application/json"
@@ -67,9 +72,14 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
                     company: stock.name,
                 })
             });
+            const data = await res.json();
 
             if(res.ok) {
-                toast.success("Stock removed from watchlist");
+                toast.success(data.message);
+            }
+            else {
+                toast.error(data.error);
+                setAddedToWatchlist(true);
             }
         } catch (e) {
             console.error(e);
