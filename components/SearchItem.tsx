@@ -19,6 +19,7 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
             }
             else {
                 // Remove from watchlist
+                await handleRemoveFromWatchlist();
             }
         } catch (e) {
             console.error(e);
@@ -26,8 +27,6 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
     }
 
     const handleAddToWatchlist = async () => {
-        const prev = addedToWatchlist;
-
         try {
             setAddedToWatchlist(true);
 
@@ -49,7 +48,33 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
         } catch (e) {
             console.error(e);
             toast.error("Failed to add stock to watchlist");
-            setAddedToWatchlist(prev);
+            setAddedToWatchlist(false);
+        }
+    }
+
+    const handleRemoveFromWatchlist = async () => {
+        try {
+            setAddedToWatchlist(false);
+
+            const res: any = await fetch("/api/watchlist", {
+                method: "DELETE",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    userId,
+                    symbol: stock.symbol,
+                    company: stock.name,
+                })
+            });
+
+            if(res.ok) {
+                toast.success("Stock removed from watchlist");
+            }
+        } catch (e) {
+            console.error(e);
+            toast.error("Failed to remove from watchlist");
+            setAddedToWatchlist(true);
         }
     }
 
@@ -57,7 +82,7 @@ const SearchItem = ({ stock, handleSelectStock, userId }: { stock: StockWithWatc
         <li key={stock.symbol} className="search-item relative">
             <Link
                 href={`/stocks/${stock.symbol}`}
-                // onClick={handleSelectStock}
+                onClick={handleSelectStock}
                 className="search-item-link"
             >
                 <TrendingUp className="h-4 w-4 text-green-500 mt-1.5" />
