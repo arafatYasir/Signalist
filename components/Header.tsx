@@ -8,9 +8,6 @@ const Header = async ({ user }: { user: User }) => {
   // Fetching inital stocks to show on search command component
   const initialStocks = await searchStocks();
 
-  // Fetching watchlist items
-  const watchlistItems = await getWatchlistItems(user.id);
-
   return (
     <header className="sticky top-0 header">
       <div className="container header-wrapper">
@@ -20,11 +17,11 @@ const Header = async ({ user }: { user: User }) => {
 
         <nav className="hidden sm:block">
           {/* ---- Nav Items ---- */}
-          <NavItems initialStocks={initialStocks} userId={user.id} watchlistItems={watchlistItems} />
+          <NavItems initialStocks={initialStocks} userId={user.id} />
         </nav>
 
         {/* ---- User Dropdown ---- */}
-        <UserDropdown user={user} initialStocks={initialStocks} watchlistItems={watchlistItems} />
+        <UserDropdown user={user} initialStocks={initialStocks} />
       </div>
     </header>
   )

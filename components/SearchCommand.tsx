@@ -4,18 +4,29 @@ import { useEffect, useState } from "react"
 import { CommandDialog, CommandEmpty, CommandInput, CommandList } from "@/components/ui/command"
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { searchStocks } from "@/lib/actions/finnhub.actions";
+import { getWatchlistItems, searchStocks } from "@/lib/actions/finnhub.actions";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Spinner } from "@/components/ui/spinner"
 import SearchItem from "./SearchItem";
 
-export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks, userId, watchlistItems }: SearchCommandProps) {
+export default function SearchCommand({ renderAs = 'button', label = 'Add stock', initialStocks, userId }: SearchCommandProps) {
     const [open, setOpen] = useState(false)
     const [searchTerm, setSearchTerm] = useState("")
     const [loading, setLoading] = useState(false)
     const [stocks, setStocks] = useState<StockWithWatchlistStatus[]>(initialStocks);
+    const [watchlistItems, setWatchlistItems] = useState<WatchListItem[] | []>([]);
 
     const isSearchMode = !!searchTerm.trim();
+
+    useEffect(() => {
+        // Fetching watchlist items
+        const fetchWatchlistItems = async () => {
+            const watchlistItems = await getWatchlistItems(userId);
+            setWatchlistItems(watchlistItems);
+        }
+
+        fetchWatchlistItems();
+    }, [open])
 
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
