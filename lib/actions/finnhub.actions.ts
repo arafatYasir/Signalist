@@ -34,7 +34,7 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
             .map((s) => s?.trim().toUpperCase())
             .filter((s): s is string => Boolean(s));
 
-        const maxArticles = 3;
+        const maxArticles = 1;
 
         // If we have symbols, try to fetch company news per symbol and round-robin select
         if (cleanSymbols.length > 0) {
@@ -56,7 +56,7 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
 
             const collected: MarketNewsArticle[] = [];
 
-            // Round-robin up to 3 picks
+            // Round-robin up to 1 pick
             for (let round = 0; round < maxArticles; round++) {
                 for (let i = 0; i < cleanSymbols.length; i++) {
                     const sym = cleanSymbols[i];
@@ -75,12 +75,7 @@ export async function getNews(symbols?: string[]): Promise<MarketNewsArticle[]> 
                 if (collected.length >= maxArticles) break;
             }
 
-            if (collected.length > 0) {
-                // Sort by datetime desc
-                collected.sort((a, b) => (b.datetime || 0) - (a.datetime || 0));
-                return collected.slice(0, maxArticles);
-            }
-            // If none collected, fall through to general news
+            return collected.slice(0, maxArticles);
         }
 
         // General market news fallback or when no symbols provided

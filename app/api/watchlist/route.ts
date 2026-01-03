@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Watchlist } from "../../../database/models/watchlist.model"
+import { dbConnect } from "@/database/mongoose";
 
 export async function POST(request: NextRequest) {
     try {
+        await dbConnect();
         const { userId, symbol, company } = await request.json();
 
         // Error handling
@@ -44,6 +46,8 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
     try {
+        await dbConnect();
+        
         const { userId, symbol, company } = await request.json();
 
         // Error handling
